@@ -4,10 +4,33 @@
  * @param {Object} state
  * @param {Object[]} actions
  *
- * @return {Object[]}
+ * @return {Object[]} Array of new state snapshots after each action
  */
 function transformStateWithClones(state, actions) {
-  // write code here
+  let currentState = { ...state };
+  const snapshots = [];
+
+  actions.forEach(({ type, extraData, keysToRemove }) => {
+    switch (type) {
+      case 'addProperties':
+        currentState = { ...currentState, ...extraData };
+        break;
+      case 'removeProperties':
+        currentState = { ...currentState };
+
+        keysToRemove.forEach((key) => {
+          delete currentState[key];
+        });
+        break;
+      case 'clear':
+        currentState = {};
+        break;
+    }
+
+    snapshots.push({ ...currentState });
+  });
+
+  return snapshots;
 }
 
 module.exports = transformStateWithClones;
