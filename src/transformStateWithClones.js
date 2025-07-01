@@ -4,7 +4,7 @@
  * @param {Object} state
  * @param {Object[]} actions
  *
- * @return {Object[]} Array of new state snapshots after each action
+ * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
   let currentState = { ...state };
